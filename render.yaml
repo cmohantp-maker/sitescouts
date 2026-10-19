@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: sitescout
+    runtime: docker
+    plan: starter          # persistent disks need a paid plan (about $7/month)
+    healthCheckPath: /api/config
+    disk:
+      name: sitescout-data
+      mountPath: /data
+      sizeGB: 5
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /data
+      - key: OTP_MODE
+        value: demo
+      - key: PAYMENTS_MODE
+        value: demo
+      - key: ALLOW_MANUAL_GPS
+        value: "false"
+      - key: ADMIN_PHONES
+        sync: false         # you type your 10-digit number in the Render dashboard
+      - key: ADMIN_PASSCODE
+        generateValue: true # Render makes a long secret; read it in the dashboard
